@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.thomsonreuters.athena.sea</groupId>
+	<artifactId>SEAWebConsole</artifactId>
+	<version>9.3.1</version>
+	<name>SEAWebConsole</name>
+	<packaging>war</packaging>
+	<properties>		
+		<skipTagging>true</skipTagging>	
+	</properties>
+	<!--SCM connectiion details for tagging -->
+	<scm>
+		<url>scm:git:${env.GIT_URL}/</url>
+		<connection>scm:git:${env.GIT_URL}/</connection> 	
+	</scm>
+	<!-- Below entry is for BAMS repository  -->
+	<distributionManagement>
+        <repository>
+            <id>bams-aws-release-maven-cloud</id>
+            <name>BAMS Release Repository</name>
+            <url>https://bams-aws.refinitiv.com/artifactory/default.maven.global/SEA/SEA_Repo/</url>
+        </repository>
+
+ </distributionManagement>
+	
+	<build>
+		<finalName>sea-console-${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<wtpversion>2.0</wtpversion>
+					<wtpContextName>/sea-console</wtpContextName>
+					<useProjectReferences>false</useProjectReferences>
+					<downloadSources>false</downloadSources>
+					<downloadJavadocs>false</downloadJavadocs>
+					<source>1.6</source>
+					<target>1.6</target>
+					<additionalProjectFacets>
+						<jst.java>6.0</jst.java>
+						<jst.web>2.5</jst.web>
+					</additionalProjectFacets>
+					<additionalProjectnatures>
+						<projectnature> org.eclipse.jdt.core.javanature </projectnature>
+						<projectnature> org.eclipse.jem.workbench.JavaEMFNature 
+						</projectnature>
+						<projectnature> org.eclipse.wst.common.project.facet.core.nature 
+						</projectnature>
+						<projectnature> org.eclipse.wst.common.modulecore.ModuleCoreNature 
+						</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand> org.eclipse.jdt.core.javabuilder </buildcommand>
+						<buildcommand> org.eclipse.wst.common.project.facet.core.builder 
+						</buildcommand>
+						<buildcommand> org.eclipse.wst.validation.validationbuilder 
+						</buildcommand>
+					</additionalBuildcommands>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<!--<skip>true</skip>-->
+				</configuration>
+			</plugin>
+			<!--<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>ftp</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<ftp server="sun5120.devo.ilx.com" remotedir="/opt/glassfish/domains/seadev/tempMxPDBFolder" userid="seatest" password="abc123" verbose="yes">
+									<fileset file="${project.build.directory}/${project.build.finalName}.war" />
+								</ftp>
+								<echo>${project.build.directory}/${project.build.finalName}-${project.version}</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant</groupId>
+						<artifactId>ant-commons-net</artifactId>
+						<version>1.6.5</version>
+					</dependency>
+					<dependency>
+						<groupId>commons-net</groupId>
+						<artifactId>commons-net</artifactId>
+						<version>1.4.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>-->
+		</plugins>
+	</build>
+		<dependencies>
+		<dependency>
+			<groupId>com.sun.enterprise.glassfish</groupId>
+			<artifactId>appserv-rt</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.thomsonreuters.athena.sse</groupId>
+			<artifactId>SSEDataAccess</artifactId>
+			<version>9.3.1</version>
+			<type>ejb</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.thomsonreuters.athena</groupId>
+			<artifactId>service-layer</artifactId>
+			<version>9.3.1</version>
+			<type>ejb</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>3.3.2.GA</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.enterprise.glassfish</groupId>
+			<artifactId>javaee</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.5-FINAL</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<!--Dependency for build distribution and tagging -->
+		<dependency>
+			<groupId>ant-contrib</groupId>
+			<artifactId>ant-contrib</artifactId>
+			<version>1.0b3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>ant</groupId>
+					<artifactId>ant</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant-nodeps</artifactId>
+			<version>1.8.1</version>
+		</dependency>
+		<dependency>
+			<groupId>ant</groupId>
+			<artifactId>ant-commons-net</artifactId>
+			<version>1.6.5</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>1.4.1</version>
+		</dependency> 
+	</dependencies>
+	<profiles>
+	  <profile>
+		 <id>buildprofile</id>
+		 <build>
+			<plugins>	  
+		 <!--Custom task post build action -->    
+		  <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-antrun-plugin</artifactId>
+			 <version>1.7</version>
+			 <inherited>false</inherited>
+			<executions>
+			  <execution>
+				<id>default-cli</id>
+				<phase>install</phase>
+				<configuration>
+				 <target>
+				   
+					 <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.runtime.classpath" />	
+					
+					 <property name="BUILDLABELX" value="${env.BUILD_NUMBER}"/>
+						<if>
+						<equals arg1="${BUILDLABELX}" arg2="$${env.BUILD_NUMBER}"/>
+							<then>
+								<echo message="This task should only be run on build server"/>
+							 </then>
+							 <else>
+								<echo message="Creating Version Info"/>	
+										
+								<property name="FileVersion" value="${project.version}.${BUILDLABELX}.0"/>							
+								<echo message="Current Version is ${FileVersion}"/>
+							
+							<property name="ScmPathSource" value="${env.GIT_URL}"/>
+
+							<zip destfile="target/Package/${project.name}.${FileVersion}.zip"
+										 basedir="target"
+										 includes="*.war"
+										 update="true"
+							 />
+
+						<if>
+							<equals arg1="${skipTagging}" arg2="false" />
+							<then>
+								<exec executable="git">
+                   <arg value="checkout"/>
+ 	                  <arg value="master"/>
+ 	              </exec>
+ 	
+                <exec executable="git">
+                    <arg value="tag"/>
+ 	                  <arg value="-a"/>
+                    <arg value="${project.name}-CI-${FileVersion}"/>
+ 	                  <arg value="-m"/>
+                    <arg value="Tagged by CI" />
+ 	              </exec>
+ 	
+                <exec executable="git">
+ 	                  <arg value="push"/>
+ 	                  <arg value="--tags"/>
+ 	              </exec>
+							</then>
+						</if>							
+							</else>
+						 </if>
+			
+				 </target>
+				</configuration>
+				<goals>
+				  <goal>run</goal>
+				</goals>
+			  </execution>
+			</executions>
+		  </plugin>
+		   </plugins>
+		  </build>
+	  </profile>
+	</profiles>
+</project>
